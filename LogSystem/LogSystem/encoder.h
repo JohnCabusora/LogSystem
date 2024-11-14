@@ -5,6 +5,12 @@
 #include <vector>
 #include <array>
 
+#ifdef _EXPORTING
+	#define DllExport _declspec(dllexport)
+#else
+	#define DllExport _declspec(dllimport)
+#endif
+
 const std::unordered_map<std::string, std::byte> logTypeMap = {
 	{"[TRACE]", std::byte{0xfa}},
 	{"[DEBUG]", std::byte{0xfb}},
@@ -125,10 +131,10 @@ const std::array<std::string, 6> logLevelArray = {"[TRACE]", "[DEBUG]", "[INFO]"
 
 class Logger
 {
-private:
-	std::ofstream logFile;
-	std::vector<std::string> logStrings{};
 public:
-	Logger(std::string logPath, std::string logName);
-	static void log(Logger logger, LogLevel severity, std::string msg);
+	DllExport Logger(std::string logPath, std::string logName);
+	DllExport static void log(Logger logger, LogLevel severity, std::string msg);
+private:
+	std::string logFile;
+	std::vector<std::string> logStrings{};
 };
