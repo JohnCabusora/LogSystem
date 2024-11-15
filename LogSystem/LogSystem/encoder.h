@@ -133,8 +133,9 @@ class Logger
 {
 public:
 	DllExport Logger(std::string logPath, std::string logName);
-	DllExport static void log(Logger logger, LogLevel severity, std::string msg);
+	DllExport void log(LogLevel severity, std::string msg);
+	DllExport void writeLog();
 private:
-	std::string logFile;
-	std::vector<std::string> logStrings{};
+	std::string logFileName;
+	std::vector<std::vector<std::byte>> logByteLines{};
 };
